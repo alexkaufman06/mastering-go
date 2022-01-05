@@ -14,7 +14,7 @@ func pausingPeriod() {
 }
 
 func main() { // Entrypoint to the application
-	fmt.Printf("Hello World")
+	fmt.Printf("Hello World!\n")
 
 	pausingPeriod()
 
