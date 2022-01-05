@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	tm "github.com/buger/goterm"
 	"time"
 )
 
@@ -13,11 +14,19 @@ func pausingPeriod() {
 	}
 }
 
+func clearScreen() {
+	tm.Clear()
+	tm.MoveCursor(1, 1)
+	tm.Flush()
+}
+
 func main() { // Entrypoint to the application
+	clearScreen()
 	fmt.Printf("Hello World!\n")
+	time.Sleep(1 * time.Second)
 
+	clearScreen()
 	pausingPeriod()
-
 	fmt.Printf("\nWhat is your name? ")
 	var name string
 	fmt.Scanln(&name)
