@@ -6,25 +6,28 @@ import (
 	"path/filepath"
 )
 
+// Example command: go run which.go fmt test log
+
 func main() {
 	arguments := os.Args
 	if len(arguments) == 1 {
 		fmt.Println("Please provide an argument!")
 		return
 	}
-	file := arguments[1]
+	files := arguments[1:]
 	path := os.Getenv("PATH")
 	pathSplit := filepath.SplitList(path)
-	for _, directory := range pathSplit {
-		fullPath := filepath.Join(directory, file)
-		// Does it exist?
-		fileInfo, err := os.Stat(fullPath)
-		if err == nil {
-			mode := fileInfo.Mode()
-			if mode.IsRegular() {
-				if mode&0111 != 0 { // Is executable?
-					fmt.Println(fullPath)
-					return
+
+	for _, file := range files {
+		for _, directory := range pathSplit {
+			fullPath := filepath.Join(directory, file)
+			fileInfo, err := os.Stat(fullPath) // Does it exist?
+			if err == nil {
+				mode := fileInfo.Mode()
+				if mode.IsRegular() {
+					if mode&0111 != 0 { // Is executable?
+						fmt.Println(fullPath)
+					}
 				}
 			}
 		}
